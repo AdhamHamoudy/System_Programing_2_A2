@@ -1,5 +1,7 @@
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 #include "SquareMat.hpp"
+
 
 TEST_CASE("Addition") {
     mat::SquareMat a(2);

@@ -16,6 +16,7 @@ public:
     SquareMat(const SquareMat& other);
 
     SquareMat& operator=(const SquareMat& other);
+    friend SquareMat operator+(const SquareMat& lhs, const SquareMat& rhs);
 
     double* operator[](int index);
 

@@ -4,6 +4,7 @@
 
 namespace mat {
 
+// Constructor: Allocates memory for a size x size matrix
 SquareMat::SquareMat(int size) : size(size) {
     if (size <= 0) {
         throw std::invalid_argument("Matrix size must be positive.");
@@ -85,6 +86,20 @@ double SquareMat::sum() const {
         }
     }
     return total;
+}
+
+SquareMat operator+(const SquareMat& lhs, const SquareMat& rhs) {
+    if (lhs.size != rhs.size) {
+        throw std::invalid_argument("Matrix sizes do not match for addition");
+    }
+
+    SquareMat result(lhs.size);
+    for (int i = 0; i < lhs.size; ++i) {
+        for (int j = 0; j < lhs.size; ++j) {
+            result[i][j] = lhs.data[i][j] + rhs.data[i][j];
+        }
+    }
+    return result;
 }
 
 } // namespace mat
