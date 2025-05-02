@@ -102,4 +102,19 @@ SquareMat operator+(const SquareMat& lhs, const SquareMat& rhs) {
     return result;
 }
 
+SquareMat operator-(const SquareMat& lhs, const SquareMat& rhs) {
+    if (lhs.size != rhs.size) {
+        throw std::invalid_argument("Matrix sizes do not match for subtraction");
+    }
+
+    SquareMat result(lhs.size);
+    for (int i = 0; i < lhs.size; ++i) {
+        for (int j = 0; j < lhs.size; ++j) {
+            result[i][j] = lhs.data[i][j] - rhs.data[i][j];
+        }
+    }
+    return result;
+}
+
+
 } // namespace mat

@@ -17,8 +17,9 @@ public:
 
     SquareMat& operator=(const SquareMat& other);
     friend SquareMat operator+(const SquareMat& lhs, const SquareMat& rhs);
-
     double* operator[](int index);
+    friend SquareMat operator-(const SquareMat& lhs, const SquareMat& rhs);
+    
 
     int getSize() const;
 
