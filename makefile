@@ -18,7 +18,7 @@ test: $(TEST_SRC) $(MAT_SRC)
 	./$(TARGET_TEST)
 
 # === Compile and run main.cpp ===
-Main: $(MAIN_SRC) $(MAT_SRC)
+main: $(MAIN_SRC) $(MAT_SRC)
 	$(CXX) $(CXXFLAGS) $(MAIN_SRC) $(MAT_SRC) -o $(TARGET_MAIN)
 	./$(TARGET_MAIN)
 
@@ -29,3 +29,6 @@ valgrind:
 # === Clean up binaries ===
 clean:
 	rm -f $(TARGET_MAIN) $(TARGET_TEST)
+
+# === Prevent conflict with file names ===
+.PHONY: all test main valgrind clean

@@ -1,6 +1,6 @@
 #include "SquareMat.hpp"
 #include <stdexcept>
-// #include <iostream>   // optional for debugging
+#include <iostream>
 
 namespace mat {
 
@@ -66,6 +66,13 @@ SquareMat& SquareMat::operator=(const SquareMat& other) {
 
 // [] Operator: Allows access to elements with mat[i][j] syntax
 double* SquareMat::operator[](int index) {
+    if (index < 0 || index >= size) {
+        throw std::out_of_range("Index out of range");
+    }
+    return data[index];
+}
+
+const double* SquareMat::operator[](int index) const {
     if (index < 0 || index >= size) {
         throw std::out_of_range("Index out of range");
     }
@@ -334,5 +341,69 @@ double operator!(const SquareMat& mat) {
 
     return det;
 }
+
+
+std::ostream& operator<<(std::ostream& os, const SquareMat& mat) {
+    int size = mat.getSize();
+    for (int i = 0; i < size; ++i) {
+        for (int j = 0; j < size; ++j) {
+            os << mat[i][j];
+            if (j < size - 1) {
+                os << " ";
+            }
+        }
+        os << "\n";
+    }
+    return os;
+
+}
+
+std::istream& operator>>(std::istream& is, SquareMat& mat) {
+    int size = mat.getSize();
+    for (int i = 0; i < size; ++i) {
+        for (int j = 0; j < size; ++j) {
+            is >> mat[i][j];
+        }
+    }
+    return is;
+}
+SquareMat& SquareMat::operator+=(const SquareMat& other) {
+    if (size != other.size) throw std::invalid_argument("Size mismatch");
+    for (int i = 0; i < size; ++i)
+        for (int j = 0; j < size; ++j)
+            data[i][j] += other.data[i][j];
+    return *this;
+}
+
+SquareMat& SquareMat::operator-=(const SquareMat& other) {
+    if (size != other.size) throw std::invalid_argument("Size mismatch");
+    for (int i = 0; i < size; ++i)
+        for (int j = 0; j < size; ++j)
+            data[i][j] -= other.data[i][j];
+    return *this;
+}
+
+SquareMat& SquareMat::operator*=(const SquareMat& other) {
+    if (size != other.size) throw std::invalid_argument("Size mismatch");
+    *this = (*this) * other;
+    return *this;
+}
+
+SquareMat& SquareMat::operator/=(double scalar) {
+    if (scalar == 0.0) throw std::invalid_argument("Division by zero");
+    for (int i = 0; i < size; ++i)
+        for (int j = 0; j < size; ++j)
+            data[i][j] /= scalar;
+    return *this;
+}
+
+SquareMat& SquareMat::operator%=(int scalar) {
+    if (scalar == 0) throw std::invalid_argument("Modulo by zero");
+    for (int i = 0; i < size; ++i)
+        for (int j = 0; j < size; ++j)
+            data[i][j] = static_cast<int>(data[i][j]) % scalar;
+    return *this;
+}
+
 
 } // namespace mat

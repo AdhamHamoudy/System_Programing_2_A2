@@ -243,4 +243,65 @@ TEST_CASE("Determinant !mat") {
     CHECK(!b == doctest::Approx(-306));
 }
 
+TEST_CASE("operator<< prints matrix correctly") {
+    mat::SquareMat m(2);
+    m[0][0] = 1;
+    m[0][1] = 2;
+    m[1][0] = 3;
+    m[1][1] = 4;
 
+    std::ostringstream out;
+    out << m;
+
+    std::string expected = "1 2\n3 4\n";
+    CHECK(out.str() == expected);
+}
+
+TEST_CASE("operator>> reads matrix correctly") {
+    std::istringstream input("1 2 3 4");
+    mat::SquareMat m(2);
+    input >> m;
+    CHECK(m[0][0] == 1);
+    CHECK(m[0][1] == 2);
+    CHECK(m[1][0] == 3);
+    CHECK(m[1][1] == 4);
+}
+
+TEST_CASE("operator+= and -= work correctly") {
+    mat::SquareMat a(2), b(2);
+    a[0][0] = 1; a[0][1] = 2; a[1][0] = 3; a[1][1] = 4;
+    b[0][0] = 5; b[0][1] = 6; b[1][0] = 7; b[1][1] = 8;
+
+    a += b;
+    CHECK(a[0][0] == 6);
+    CHECK(a[1][1] == 12);
+
+    a -= b;
+    CHECK(a[0][0] == 1);
+    CHECK(a[1][1] == 4);
+}
+
+TEST_CASE("operator*= performs matrix multiplication correctly") {
+    mat::SquareMat a(2), b(2);
+    a[0][0] = 1; a[0][1] = 2; a[1][0] = 3; a[1][1] = 4;
+    b[0][0] = 2; b[0][1] = 0; b[1][0] = 1; b[1][1] = 2;
+
+    a *= b;
+    CHECK(a[0][0] == 4);  // 1*2 + 2*1
+    CHECK(a[0][1] == 4);  // 1*0 + 2*2
+    CHECK(a[1][0] == 10); // 3*2 + 4*1
+    CHECK(a[1][1] == 8);  // 3*0 + 4*2
+}
+
+TEST_CASE("operator/= and %= work correctly") {
+    mat::SquareMat a(2);
+    a[0][0] = 8; a[0][1] = 6; a[1][0] = 4; a[1][1] = 2;
+
+    a /= 2;
+    CHECK(a[0][0] == 4);
+    CHECK(a[1][1] == 1);
+
+    a %= 3;
+    CHECK(static_cast<int>(a[0][0]) == 1);
+    CHECK(static_cast<int>(a[1][1]) == 1);
+}

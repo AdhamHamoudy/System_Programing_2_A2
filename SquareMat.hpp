@@ -1,5 +1,6 @@
 #ifndef SQUAREMAT_HPP
 #define SQUAREMAT_HPP
+#include <ostream>
 
 namespace mat {
 
@@ -18,8 +19,9 @@ public:
     SquareMat& operator=(const SquareMat& other);
     friend SquareMat operator+(const SquareMat& lhs, const SquareMat& rhs);
     double* operator[](int index);
+    const double* operator[](int index) const;
     friend SquareMat operator-(const SquareMat& lhs, const SquareMat& rhs);
-    friend SquareMat operator-(const SquareMat& mat); 
+    friend SquareMat operator-(const SquareMat& mat);
     friend SquareMat operator*(const SquareMat& lhs, const SquareMat& rhs);
     friend SquareMat operator*(const SquareMat& mat, double scalar);
     friend SquareMat operator*(double scalar, const SquareMat& mat);
@@ -40,7 +42,14 @@ public:
     friend bool operator>=(const SquareMat& lhs, const SquareMat& rhs);
     friend SquareMat getMinor(const SquareMat& mat, int rowToRemove, int colToRemove);
     friend double operator!(const SquareMat& mat);
-
+    friend std::ostream& operator<<(std::ostream& os, const SquareMat& mat);
+    friend std::istream& operator>>(std::istream& is, SquareMat& mat);
+    SquareMat& operator+=(const SquareMat& other);
+    SquareMat& operator-=(const SquareMat& other);
+    SquareMat& operator*=(const SquareMat& other);
+    SquareMat& operator/=(double scalar);
+    SquareMat& operator%=(int scalar);
+    
     int getSize() const;
 
     // Helper to calculate sum of all elements (used in ==, >, < ops)
