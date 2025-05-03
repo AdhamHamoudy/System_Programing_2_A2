@@ -19,7 +19,27 @@ public:
     friend SquareMat operator+(const SquareMat& lhs, const SquareMat& rhs);
     double* operator[](int index);
     friend SquareMat operator-(const SquareMat& lhs, const SquareMat& rhs);
-    
+    friend SquareMat operator-(const SquareMat& mat); 
+    friend SquareMat operator*(const SquareMat& lhs, const SquareMat& rhs);
+    friend SquareMat operator*(const SquareMat& mat, double scalar);
+    friend SquareMat operator*(double scalar, const SquareMat& mat);
+    friend SquareMat operator%(const SquareMat& lhs, const SquareMat& rhs);
+    friend SquareMat operator%(const SquareMat& mat, int scalar);
+    friend SquareMat operator/(const SquareMat& mat, double scalar);
+    friend SquareMat operator^(const SquareMat& mat, int power);
+    SquareMat& operator++();    // ++mat
+    SquareMat& operator--();    // --mat
+    SquareMat operator++(int);  // mat++
+    SquareMat operator--(int);  // mat--
+    friend SquareMat operator~(const SquareMat& mat);
+    friend bool operator==(const SquareMat& lhs, const SquareMat& rhs);
+    friend bool operator!=(const SquareMat& lhs, const SquareMat& rhs);
+    friend bool operator<(const SquareMat& lhs, const SquareMat& rhs);
+    friend bool operator<=(const SquareMat& lhs, const SquareMat& rhs);
+    friend bool operator>(const SquareMat& lhs, const SquareMat& rhs);
+    friend bool operator>=(const SquareMat& lhs, const SquareMat& rhs);
+    friend SquareMat getMinor(const SquareMat& mat, int rowToRemove, int colToRemove);
+    friend double operator!(const SquareMat& mat);
 
     int getSize() const;
 
